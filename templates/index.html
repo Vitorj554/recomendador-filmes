@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>🎬 Recomendador de Filmes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="https://img.icons8.com/color/48/movie-projector.png">
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <h1>🎬 Recomendador de Filmes</h1>
+
+        <form method="POST">
+            <label for="genero">Escolha um gênero:</label>
+            <select name="genero" id="genero">
+                {% for genero in generos %}
+                    <option value="{{ genero.name }}">{{ genero.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Recomendar Filmes</button>
+        </form>
+
+        {% if recomendacoes %}
+        <div class="filmes">
+            {% for filme in recomendacoes %}
+            <div class="filme">
+                {% if filme.poster %}
+                    <img src="{{ filme.poster }}" alt="Pôster de {{ filme.titulo }}">
+                {% endif %}
+                <h3>{{ filme.titulo }}</h3>
+                <p><strong>Ano:</strong> {{ filme.ano }}</p>
+                <p><strong>Nota:</strong> {{ filme.nota }}</p>
+                <p>{{ filme.sinopse }}</p>
+                {% if filme.trailer %}
+                    <p><a href="{{ filme.trailer }}" target="_blank" class="trailer-link">🎬 Ver trailer no YouTube</a></p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
